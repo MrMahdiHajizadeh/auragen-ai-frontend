@@ -1,0 +1,16 @@
+node_modules
+npm-debug.log
+dist
+.git
+.gitignore
+.env
+.env.local
+.env.example
+docker-compose.yml
+README.md
+sawaggermagic
+stich_full_prompt.txt
+ui_generation_prompts.md
+api_matching_analysis.md
+Dockerfile
+.dockerignore

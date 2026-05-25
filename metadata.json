@@ -1,0 +1,6 @@
+{
+  "name": "AuraGen AI",
+  "description": "A premium computational AI image synthesis platform styled with deep space ultra-glassmorphism and custom generation controllers.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

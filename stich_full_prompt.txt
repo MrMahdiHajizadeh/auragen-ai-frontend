@@ -1,0 +1,102 @@
+Build a state-of-the-art, premium AI Avatar and Image Generation Web Application named "AuraGen AI". 
+
+Use React, Tailwind CSS, Lucide Icons, and Framer Motion for smooth micro-animations. The application must look like a high-end, multi-million-dollar AI SaaS platform.
+
+==================================================
+1. DESIGN SYSTEM & VISUAL GUIDELINES
+==================================================
+- Theme: Sleek premium dark mode. Use deep space-gray (#05070c to #0b0f19) as the background.
+- Accents: Glowing neon colors. Electric Indigo (#6366F1) for primary actions, Digital Cyan (#06B6D4) for information/progress, and Warm Amber (#F59E0B) for coins and premium statuses.
+- Aesthetics: Ultra-glassmorphism (backdrop-filter: blur(16px), border: 1px solid rgba(255,255,255,0.06), translucent slate backgrounds).
+- Radians: Subtle glowing radial gradients floating in the corners of the background.
+- Animations: Active hover transitions (scale cards by translateY(-6px) with cubic-bezier curves), loading skeletons, and soft glowing outline transitions.
+
+==================================================
+2. RESPONSE & WORKSPACE LAYOUT
+==================================================
+Create a fully responsive fluid dashboard frame:
+- Sidebar: Large logo ("AuraGen AI"), workspace navigation links (Creative Studio, My Gallery, Coin Store), and a user profile card at the bottom (displaying user name, email, avatar badge, and log-out action). Mobile drawer transition included.
+- Topbar: Displays the active view title, a glowing coin balance indicator (e.g., "🪙 250 Coins") linked to the Store page, and a quick-profile circle avatar.
+
+==================================================
+3. SYSTEM VIEW COMPONENTS
+==================================================
+
+[A] AUTHENTICATION VIEW:
+- Modal card centered over a glowing space backdrop.
+- Dual-tabs: "Sign In" and "Create Account".
+- Fields: Name (only for registration), Email, and Password with validation states.
+- Animated "Continue with Google" button with micro-hover scaling.
+- Securely stores the active JWT token and user profile in state upon submit.
+
+[B] CREATIVE DASHBOARD VIEW:
+- Hero Banner Carousel: Dynamic horizontal graphic slide showing promotional campaigns. Selecting "Generate Now" opens the corresponding model generator.
+- Horizontal Category Selector Row: List of tags with custom colored dots (e.g., Sci-Fi, Professional, Anime, Classic Fantasy, All Models). Clicking filters the generator list below.
+- Generators Grid: Interactive cards featuring a high-quality preview portrait, category badge, and glowing tags for "Token Cost" (e.g., "15 Coins") and "Uploads Needed" (e.g., "Requires 4 Photos").
+
+[C] GENERATION WORKSPACE / STUDIO VIEW:
+- Left Column: Selected generator details (Name, full description, coin cost, required image count, model id).
+- Right Column:
+  * Drag-and-drop file uploader block with a dashed boundary. Changes border color (e.g., turns emerald) when the user uploads the exact number of required images.
+  * Preview grid showing uploaded headshots as thumbnail frames with a "Remove" hover button.
+  * Custom Prompt Input: A text field for custom style directions (optional).
+  * Glowing CTA "Generate Avatar" button that validates coin balance.
+- WEBSOCKET PROGRESS DIALOG OVERLAY:
+  * Circular SVG progress loader with glowing linear gradient lines, rendering percentages from 0% to 100%.
+  * Terminal logs panel showing dynamic socket server entries:
+    - "Establishing connection to graphics cluster..."
+    - "Transferring user headshots into VRAM memory maps..."
+    - "Analyzing face landmarks and alignments..."
+    - "Running denoising processes using Flux latent layers..."
+    - "Upscaling and saving output matrix..."
+  * Reveals the completed high-fidelity avatar side-by-side with original uploads on 100% completion.
+
+[D] MY GALLERY VIEW:
+- Grid layout showcasing generated creations.
+- Detail Lightbox on click:
+  * Large image frame with download and sharing actions.
+  * Metadata metrics panel displaying: Model Engine, Generation duration (e.g. 14.5s), Input Tokens, Output Tokens, estimated cost in USD ($0.04), and a "Delete Creation" soft-delete option.
+
+[E] COIN REFILL SHOP (CAFÉ BAZAAR SYSTEM):
+- Grid displaying coin subscription plans (Starter, Gold Creator, Ultimate VIP) with coin quantities and prices.
+- PRICING IN IRANIAN RIALS (e.g. "500,000 ریال").
+- Simulated Café Bazaar Payment Sheet:
+  * Clicking "Refill Wallet" triggers an Android-style secure modal listing package name (com.auragen.ai), product SKU, plan UUID, total Rial cost, and authorization callbacks.
+  * Simulates secure validation and credits the coin balance in real-time on approval.
+
+==================================================
+4. EXACT DJANGO/FASTAPI BACKEND BINDINGS DATA
+==================================================
+Ensure all React hooks, state objects, and form inputs strictly map to the keys defined in this Swagger API schema. You should build a smart API client that fetches from this schema but falls back to mock storage if the server is offline:
+
+- Banners List Schema:
+  Endpoint: GET `/api/banners/` -> Returns array of:
+  `{ id: "UUID", name: "string", link: "URL", banner_url: "URL", description: "string" }`
+
+- Categories List Schema:
+  Endpoint: GET `/api/categories/` -> Returns array of:
+  `{ id: "UUID", name: "string", color: "Hex Color", photo_url: "URL" }`
+
+- Generators List Schema:
+  Endpoint: GET `/api/generators/` -> Returns array of:
+  `{ id: "UUID", name: "string", model_id: "string", required_images_count: integer, token_cost: integer, photo_url: "URL", color: "Hex", description: "string" }`
+
+- Image Generation Trigger Schema:
+  Endpoint: POST `/api/generate/{generator_id}/`
+  Body: `{ input_image_ids: ["UUID_1", "UUID_2"], description: "string" }`
+  Response: `{ session_id: "string", ws_url: "WebSocket URL for progress", message: "Accepted" }`
+
+- Generated Gallery List Schema:
+  Endpoint: GET `/api/generated/` -> Returns array of:
+  `{ id: "UUID", output_image_url: "URL", generation_time: float, input_tokens: integer, output_tokens: integer, cost: float, generated_at: "date-time" }`
+
+- Pricing Subscription Plans Schema:
+  Endpoint: GET `/api/plans/` -> Returns array of:
+  `{ id: "UUID", name: "string", coins: integer, price: integer (in Rials), bazaar_product_id: "string" }`
+
+- Café Bazaar Purchase Verification Schema:
+  Endpoint: POST `/api/plans/verify/`
+  Body: `{ package_name: "string", product_id: "string", purchase_token: "string", plan_id: "UUID" }`
+  Response: `{ success: true, message: "Purchase verified" }`
+
+Deliver a completely polished, jaw-dropping frontend workspace, using localStorage to save active user accounts, generated gallery records, and coin logs persistently across browser refreshes.
